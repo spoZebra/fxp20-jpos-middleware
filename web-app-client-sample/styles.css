@@ -1,0 +1,85 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px 0;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+#connection-status {
+  text-align: center;
+  font-size: 18px;
+}
+
+#user-input input {
+  padding: 8px;
+  margin: 5px 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#response {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+}
+#message-container {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  width: 90%;
+  margin-top: 10px;
+  margin-left: 5%;
+  margin-right: 5%;
+  border-radius: 8px;
+  height: 300px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+
+#message-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#message-list li {
+  padding: 5px 10px;
+  border-bottom: 1px solid #eee;
+  font-family: Arial, sans-serif;
+}
+
+#message-list li:nth-child(odd) {
+  background-color: #f1f1f1;
+}

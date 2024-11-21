@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FXP20 WebSocket Test Client</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <h1>FXP20 WebSocket Test Client</h1>
+    <div id="connection-status">Connecting...</div>
+    <div id="commands">
+      <button onclick="sendCommand('1')">Start Inventory</button>
+      <button onclick="sendCommand('2')">Start Inventory with Duration</button>
+      <button onclick="sendCommand('3')">Stop Inventory</button>
+      <button onclick="sendCommand('4')">Write Tag ID</button>
+      <button onclick="sendCommand('5')">Write Tag Data</button>
+      <button onclick="sendCommand('6')">Kill Tag</button>
+      <button onclick="sendCommand('7')">Lock Tag</button>
+    </div>
+ 
+  </div>
+
+  <div id="message-container">
+    <h2>Messages</h2>
+    <ul id="message-list"></ul>
+  </div>
+  
+  <script src="app.js"></script>
+</body>
+</html>

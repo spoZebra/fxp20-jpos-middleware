@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JposEntries PUBLIC "-//JavaPOS//DTD//EN"
+                             "jpos/res/jcl.dtd">
+<JposEntries>
+	<JposEntry logicalName="ZebraRFIDScanners">
+        <creation factoryClass="com.zebra.jpos.service.rfid.SymRFIDSvc115Factory" serviceClass="com.zebra.jpos.service.rfid.RFIDScannerService115Impl"/>
+        <vendor name="Zebra Technologies" url="http://www.zebra.com"/>
+        <jpos category="RFIDScanner" version="1.15"/>
+        <product description="RFIDScannerService" name="RFIDScannerService" url="http://www.zebra.com"/>
+        <!--Scanner type, default=0, valid values are: 1- ALL Scanners-->
+		<prop name="ScannerType" value="999"/>
+    </JposEntry>
+</JposEntries>
