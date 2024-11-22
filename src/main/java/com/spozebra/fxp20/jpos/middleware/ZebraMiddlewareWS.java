@@ -30,19 +30,28 @@ public class ZebraMiddlewareWS implements IWebSocketListener, IZebraReaderListen
 
     public void init(){
         
-        // Init driver
-        zebraReaderService = new ZebraReaderService(this);
+        // Init JPOS driver
+        initDriver();
+
+        // Init WS
         try {
-            zebraReaderService.initReader();
             Server server = new Server("localhost", 1997, "/", null, WebSocketServer.class);
             WebSocketServer.setListener(this);
             server.start();
-
             System.out.println("Websocket Server started successfully");
-            
-        } catch (JposException e) {
-            e.printStackTrace();
         } catch (DeploymentException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void initDriver(){
+        zebraReaderService = new ZebraReaderService(this);
+
+        try {
+            zebraReaderService.initReader();
+            System.out.println("Reader Service Initialized");
+        } catch (JposException e) {
             e.printStackTrace();
         }
     }
@@ -68,8 +77,13 @@ public class ZebraMiddlewareWS implements IWebSocketListener, IZebraReaderListen
             switch (command) {
                 case "CHECK_HEALTH":
                     boolean isAlive = zebraReaderService.checkHealth();
-                    sendResponse(client, command, Map.of("isAlive", isAlive));
+                    sendResponse(client, command, Map.of("success", true, "isAlive", isAlive));
                     break;
+    
+                case "RETRY_CONNECT":
+                    zebraReaderService.initReader();
+                    sendResponse(client, command, Map.of("success", true));
+                break;
     
                 case "START_INVENTORY":
                     int duration = jsonObject.getJSONObject("parameters").getInt("duration");
