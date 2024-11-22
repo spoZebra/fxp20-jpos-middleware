@@ -24,7 +24,7 @@ jobs:
         
     - name: Configure Maven for GitHub Packages
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
       run: |
         mkdir -p ~/.m2
         echo "<settings>
