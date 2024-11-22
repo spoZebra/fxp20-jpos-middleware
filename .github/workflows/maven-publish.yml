@@ -1,6 +1,3 @@
-# This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
-# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
-
 name: Maven Package
 
 on:
@@ -28,7 +25,39 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-    - name: Publish to GitHub Packages Apache Maven
-      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+    - name: Create Output Directory
+      run: mkdir -p outTemp
+
+    - name: Copy JAR to Output Directory
+      run: cp target/*.jar outTemp/
+
+    - name: Copy jPOS config file
+      run: |
+        cp jpos.xml outTemp/
+
+    - name: Create Batch File in Output Directory
+      run: |
+        echo CLS > outTemp/start-application.bat
+        echo @echo off >> out/start-application.bat
+        echo Echo. >> out/start-application.bat
+        echo Echo. >> out/start-application.bat
+        echo Echo. >> out/start-application.bat
+        echo Echo    Please wait while loading the application... >> out/start-application.bat
+        echo Echo. >> out/start-application.bat
+        echo Echo. >> out/start-application.bat
+        echo java --enable-preview -jar fxp20-jpos-middleware.jar >> out/start-application.bat
+        echo REM 2^>^&1 ^>NUL >> out/start-application.bat
+        echo pause >> out/start-application.bat
+        
+    - name: Zip Output Directory
+      run: zip -r package.zip outTemp
+
+    - name: Publish Zip to GitHub Packages
+      run: |
+        curl -u ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }} \
+          -X PUT \
+          -H "Content-Type: application/zip" \
+          --data-binary @package.zip \
+          https://maven.pkg.github.com/${{ github.repository_owner }}/maven-repo/package.zip
       env:
-        GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
