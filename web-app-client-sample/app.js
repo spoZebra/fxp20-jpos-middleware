@@ -109,7 +109,9 @@ function getWriteTagIdParams() {
   const inputTagId = prompt("Enter input tag ID:");
   const newTagId = prompt("Enter new tag ID:");
   const timeout = prompt("Enter timeout (milliseconds):");
-  const password = prompt("Enter password:");
+  var password = prompt("Enter password - Leave it empty to use default (00):");
+  if(password == "")
+    password = "00";
   return { "inputTagId": inputTagId, "newTagId": newTagId, "timeout": parseInt(timeout), "password": password };
 }
 
@@ -118,14 +120,18 @@ function getWriteTagDataParams() {
   const data = prompt("Enter data to write:");
   const startOffset = prompt("Enter start offset:");
   const timeout = prompt("Enter timeout (milliseconds):");
-  const password = prompt("Enter password:");
+  var password = prompt("Enter password - Leave it empty to use default (00):");
+  if(password == "")
+    password = "00";
   return { "inputTagId": inputTagId, "data": data, "startOffset": parseInt(startOffset), "timeout": parseInt(timeout), "password": password };
 }
 
 function getTagOperationParams() {
   const inputTagId = prompt("Enter input tag ID:");
   const timeout = prompt("Enter timeout (milliseconds):");
-  const password = prompt("Enter password:");
+  var password = prompt("Enter password - Leave it empty to use default (00):");
+  if(password == "")
+    password = "00";
   return { "inputTagId": inputTagId, "timeout": parseInt(timeout), "password": password };
 }
 

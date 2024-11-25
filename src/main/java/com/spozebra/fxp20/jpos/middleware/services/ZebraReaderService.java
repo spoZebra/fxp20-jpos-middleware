@@ -88,9 +88,7 @@ public class ZebraReaderService {
     public void writeTagIdOperation(String inputTagId, String newTagId, int timeout, String password) throws JposException {
         postLog("OPERATION MENU","writeTagIdOperation Destination ID: "+ inputTagId);
 
-        var passwordBytes = new byte[0];
-        if(password != null && password != "")
-            passwordBytes = password.getBytes();
+        var passwordBytes = password.getBytes();
 
         reader.writeTagID(inputTagId.getBytes(), Utils.hexStringToByteArray(newTagId), timeout, passwordBytes);
     }
@@ -98,9 +96,7 @@ public class ZebraReaderService {
     public void writeTagDataOperation(String inputTagId, String data,int startOffset, int timeout, String password) throws JposException {
         postLog("OPERATION MENU","writeTagDataOperation Destination ID: "+ inputTagId);
 
-        var passwordBytes = new byte[0];
-        if(password != null && password != "")
-            passwordBytes = password.getBytes();
+        var passwordBytes = password.getBytes();
 
         reader.writeTagData(inputTagId.getBytes(), Utils.hexStringToByteArray(data), startOffset, timeout, passwordBytes);
     }
@@ -108,9 +104,7 @@ public class ZebraReaderService {
     public void killTagOperation(String inputTagId, int timeout, String password) throws JposException {
         postLog("OPERATION MENU","killTagOperation Destination ID: "+ inputTagId);
         
-        var passwordBytes = new byte[0];
-        if(password != null && password != "")
-            passwordBytes = password.getBytes();
+        var passwordBytes = password.getBytes();
 
         reader.disableTag(inputTagId.getBytes(), timeout, passwordBytes);
     }
@@ -118,9 +112,7 @@ public class ZebraReaderService {
     public void lockTagOperation(String inputTagId, int timeout, String password) throws JposException {
         postLog("OPERATION MENU","lockTagOperation Destination ID: "+ inputTagId);
         
-        var passwordBytes = new byte[0];
-        if(password != null && password != "")
-            passwordBytes = password.getBytes();
+        var passwordBytes = password.getBytes();
             
         reader.lockTag(inputTagId.getBytes(), timeout, passwordBytes);
     }
