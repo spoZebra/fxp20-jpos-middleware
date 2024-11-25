@@ -47,6 +47,16 @@
             <systemPath>${project.basedir}/lib/xml-apis-2.12.0.jar</systemPath>
         </dependency>
 
+        <!-- This dependency is hosted in my private GitHub as it is an early access version
+        Please contact your Zebra Sales representative to get it.  
+        Once you get it, uncomment the scope and systemPath tags -->
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>jpos-rfidscanner-svc</artifactId>
+            <!-- <scope>system</scope> -->
+            <!-- <systemPath>${project.basedir}/lib/pos-rfidscanner-svc.jar</systemPath> -->
+            <version>2.0.0</version>
+        </dependency>
         <!-- Custom or Local JARs -->
         <dependency>
             <groupId>com.example</groupId>
@@ -61,11 +71,6 @@
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/jcl.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>jpos-rfidscanner-svc</artifactId>
-            <version>2.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.example</groupId>
