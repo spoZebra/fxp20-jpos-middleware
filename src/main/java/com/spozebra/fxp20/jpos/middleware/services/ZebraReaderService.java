@@ -20,15 +20,22 @@ public class ZebraReaderService {
 
      public void initReader() throws JposException {
         reader.open("ZebraRFIDScanners");
+
         if(!reader.getClaimed())
             reader.claim(1000);
-        
+
         // Setup listener
         reader.setDeviceEnabled(true);
         reader.addDataListener(dataEventListener);
         reader.addStatusUpdateListener(statusUpdateListener);
         reader.addOutputCompleteListener(outputCompleteListener);
         reader.addErrorListener(errorEventListener);
+    }
+
+    public void retryConnect() throws JposException {
+        reader.release();
+        reader.close();
+        initReader();
     }
 
     public void startReadingTags(int duration){

@@ -54,7 +54,7 @@
             <groupId>com.example</groupId>
             <artifactId>jpos-rfidscanner-svc</artifactId>
             <!-- <scope>system</scope> -->
-            <!-- <systemPath>${project.basedir}/lib/pos-rfidscanner-svc.jar</systemPath> -->
+            <!-- <systemPath>${project.basedir}/lib/jpos-rfidscanner-svc-2.0.0.jar</systemPath> -->
             <version>2.0.0</version>
         </dependency>
         <!-- Custom or Local JARs -->

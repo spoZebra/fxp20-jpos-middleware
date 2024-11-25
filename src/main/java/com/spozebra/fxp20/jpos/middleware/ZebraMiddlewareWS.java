@@ -81,7 +81,7 @@ public class ZebraMiddlewareWS implements IWebSocketListener, IZebraReaderListen
                     break;
     
                 case "RETRY_CONNECT":
-                    zebraReaderService.initReader();
+                    zebraReaderService.retryConnect();
                     sendResponse(client, command, Map.of("success", true));
                 break;
     
