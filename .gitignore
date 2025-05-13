@@ -1,2 +1,3 @@
-lib/jpos-rfidscanner-svc-2.0.0.jar
+lib/jpos-rfidscanner-svc-*
 *.class
+src/main/java/com/spozebra/fxp20/jpos/middleware/services/ZebraReaderService.java

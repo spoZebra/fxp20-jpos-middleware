@@ -7,14 +7,8 @@
     <groupId>com.spozebra.fxp20.jpos.middleware</groupId>
     <artifactId>fxp20-jpos-middleware</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <repositories>
-        <repository> 
-            <id>github</id>
-            <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/spozebra/fxp20-jpos-driver-early-access</url>
-        </repository>
-    </repositories>
    <dependencies>
+        <!-- Websocket Library -->
         <dependency>
             <groupId>org.glassfish.tyrus</groupId>
             <artifactId>tyrus-container-grizzly-server</artifactId>
@@ -30,33 +24,16 @@
             <artifactId>json</artifactId>
             <version>20240303</version>
         </dependency>
-
-        <!-- Xerces Library -->
-        <dependency>
-            <groupId>xerces</groupId>
-            <artifactId>xercesImpl</artifactId>
-            <version>2.12.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/xercesImpl-2.12.0.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>xml-apis</groupId>
-            <artifactId>xml-apis</artifactId>
-            <version>2.12.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/xml-apis-2.12.0.jar</systemPath>
-        </dependency>
-
-        <!-- This dependency is hosted in my private GitHub as it is an early access version
-        Please contact your Zebra Sales representative to get it.  
-        Once you get it, uncomment the scope and systemPath tags -->
+        
+        <!-- Zebra JPOS Driver -->
         <dependency>
             <groupId>com.example</groupId>
             <artifactId>jpos-rfidscanner-svc</artifactId>
-            <!-- <scope>system</scope> -->
-            <!-- <systemPath>${project.basedir}/lib/jpos-rfidscanner-svc-2.0.0.jar</systemPath> -->
-            <version>2.0.0</version>
+            <scope>system</scope> 
+            <systemPath>${project.basedir}/lib/jpos-rfidscanner-svc-3.0.5.jar</systemPath>
+            <version>3.0.5</version>
         </dependency>
+
         <!-- Custom or Local JARs -->
         <dependency>
             <groupId>com.example</groupId>
@@ -72,13 +49,28 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/jcl.jar</systemPath>
         </dependency>
-        <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>jpos114</artifactId>
-            <version>1.0</version>
+        <!-- Xerces Library and other libraries -->
+        <!-- <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.12.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/jpos114.jar</systemPath>
+            <systemPath>${project.basedir}/lib/xercesImpl-2.12.0.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>2.12.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/xml-apis-2.12.0.jar</systemPath>
+        </dependency> -->
+        <!-- <dependency>
+            <groupId>org.javapos</groupId>
+            <artifactId>javapos-controls</artifactId>
+            <version>1.3</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/javapos-controls.jar</systemPath>
+        </dependency> -->
     </dependencies>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

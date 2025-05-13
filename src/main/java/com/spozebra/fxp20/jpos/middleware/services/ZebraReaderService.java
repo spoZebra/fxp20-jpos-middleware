@@ -5,11 +5,14 @@ import java.net.UnknownHostException;
 import com.zebra.log.rfid.scanner.JCoreLogger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import jpos.JposException;
 import jpos.RFIDScanner;
 import jpos.events.*;
+
+import static jpos.RFIDScannerConst.RFID_RT_ID;
 
 public class ZebraReaderService {
     private RFIDScanner reader = new RFIDScanner();
@@ -21,16 +24,15 @@ public class ZebraReaderService {
      public void initReader() throws JposException {
         reader.open("ZebraRFIDScanners");
 
-        if(!reader.getClaimed()){
-            reader.claim(1000);
+        reader.claim(1000);
 
-            // Setup listener
-            reader.setDeviceEnabled(true);
-            reader.addDataListener(dataEventListener);
-            reader.addStatusUpdateListener(statusUpdateListener);
-            reader.addOutputCompleteListener(outputCompleteListener);
-            reader.addErrorListener(errorEventListener);
-        }
+        // Setup listener
+        reader.setDeviceEnabled(true);
+                reader.setDataEventEnabled(true);
+        reader.addDataListener(dataEventListener);
+        reader.addStatusUpdateListener(statusUpdateListener);
+        reader.addOutputCompleteListener(outputCompleteListener);
+        reader.addErrorListener(errorEventListener);
     }
 
     public void retryConnect() throws JposException {
@@ -41,23 +43,21 @@ public class ZebraReaderService {
 
     public void startReadingTags(int duration){
         try {
-            if(duration == 0)
-                reader.startReadTags(16, new byte[0], new byte[0], 0, 0, new byte[0]);
-            else{
-                reader.readTags(16, new byte[0], new byte[0], 0, 0, duration, new byte[0]);
-                parseTags(); //invoked after the duration is reached
+            if(duration == 0) {
+                // Receive tags as soon as read - continuos read
+                reader.startReadTags(RFID_RT_ID, new byte[0], new byte[0], 0, 0, new byte[0]);
+            } else{
+                // Receive tags when the inventory is stopped - only one data event will be delivered
+                reader.readTags(RFID_RT_ID, new byte[0], new byte[0], 0, 0, duration, new byte[0]);
             }
         } catch (JposException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
     public void stopReadingTags(){
         try {
             reader.stopReadTags(new byte[0]);
-            parseTags();
         } catch (JposException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -117,7 +117,7 @@ public class ZebraReaderService {
         reader.lockTag(inputTagId.getBytes(), timeout, passwordBytes);
     }
 
-    private void parseTags(){
+    private void parseTagsNonContinuosRead(){
         try {
             List<String> tags = new ArrayList<String>();
             reader.firstTag();
@@ -133,11 +133,29 @@ public class ZebraReaderService {
             zebraReaderListener.onTagsRead(tags);
             
         } catch (JposException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
     
+    
+    private void parseTagsContinuosRead() {
+        String readTag = "";
+        try {
+
+            reader.firstTag();
+            readTag = new String(reader.getCurrentTagID());
+            // DCSRFID-7134, but opened! TagCount starts from 0 and it is corrected only when the inventory stops - workaround  
+            for(int i = 0; i < reader.getTagCount(); i++){ 
+                reader.nextTag();
+                System.out.println(new String(reader.getCurrentTagID()));
+                readTag = new String(reader.getCurrentTagID());
+            }
+        } catch (JposException e) {
+            e.printStackTrace();
+        }
+        zebraReaderListener.onTagsRead(Arrays.asList(readTag));
+    }
+
     OutputCompleteListener outputCompleteListener = new OutputCompleteListener() {
 
         @Override
@@ -162,6 +180,16 @@ public class ZebraReaderService {
         @Override
         public void dataOccurred(DataEvent dataEvent) {
             postLog("dataOccurred"," dataEvent STATUS : "+dataEvent.getStatus());
+            try {
+                if(reader.getContinuousReadMode())
+                    // DCSRFID-7137, bug opened - reading CurrentTagId should be enough here
+                    // parseTagsContinuosRead is just a work around implemented
+                    parseTagsContinuosRead(); 
+                else
+                    parseTagsNonContinuosRead(); // TODO tag list results empty here
+            } catch (JposException e) {
+                e.printStackTrace();
+            }
         }
     };
 

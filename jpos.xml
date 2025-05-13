@@ -3,11 +3,12 @@
                              "jpos/res/jcl.dtd">
 <JposEntries>
 	<JposEntry logicalName="ZebraRFIDScanners">
-        <creation factoryClass="com.zebra.jpos.service.rfid.SymRFIDSvc115Factory" serviceClass="com.zebra.jpos.service.rfid.RFIDScannerService115Impl"/>
+        <creation factoryClass="com.zebra.jpos.service.rfid.SymRFIDSvc115Factory" serviceClass="com.zebra.jpos.service.rfid.SymRFIDScannerService115"/>
         <vendor name="Zebra Technologies" url="http://www.zebra.com"/>
         <jpos category="RFIDScanner" version="1.15"/>
         <product description="RFIDScannerService" name="RFIDScannerService" url="http://www.zebra.com"/>
         <!--Scanner type, default=0, valid values are: 1- ALL Scanners-->
-		<prop name="ScannerType" value="999"/>
+		<prop name="antennaPower" value="200"/>
+
     </JposEntry>
 </JposEntries>
